@@ -1,0 +1,48 @@
+Attribution notices — retained per Apache License 2.0, Section 4.
+
+This repository ("NInfer Windows DSpine draft") is licensed under the Apache License 2.0
+(see LICENSE). It depends on, derives from, or references the following third-party work,
+each of which remains licensed under its original terms:
+
+1. Inference engine (source shipped here: src/, binary: bin/ninfer-serve-dspine.exe)
+   - NInfer by Neroued, https://github.com/Neroued/ninfer  (Apache License 2.0).
+   - Windows port fork: natpate/ninfer-windows, https://github.com/natpate/ninfer-windows
+     (Apache License 2.0), branch dev, merged to the November 2026 upstream revision.
+   - Our local additions, not present upstream:
+       * DSpine speculative-decode draft backend (--spec dspine): code bridge, serial
+         refinement tail, and the draft execution path under src/ops/dspine_bridge/ and
+         src/models/qwen3_5/.
+       * NVFP4 weight-only storage for the codebook / TG / TSV vocabulary tables, with
+         on-the-fly row dequantization in the gather kernels (saves ~869 MiB of draft VRAM).
+       * Windows / CUDA 13.1 / MSVC rebuild (sm_120a, RTX 5090).
+
+2. Conversion toolchain (shipped here: converter/)
+   - ninfer-rtx5090-mobile by Mirko Covizzi,
+     https://github.com/MirkoCovizzi/ninfer-rtx5090-mobile  (Apache License 2.0).
+     The tools/convert and tools/artifact subtrees are vendored verbatim; the DSpine recipe
+     (tools/convert/qwen3_8_27b/dspine_recipe.py) and the NVFP4 table opt-in are our additions.
+
+3. DSpine draft model (shipped here: draft/)
+   - DSpine by Tencent, https://github.com/tencent/dspine  (Apache License 2.0).
+   - Draft checkpoint: tencent/Qwen3.8-27B-DSpine-b16, revision
+     30de2dad4de18ddf9c66d6a5a3a39b59ea6444fb (Apache License 2.0).
+     The BF16 source checkpoint is redistributed under draft/dspine-b16-bf16/; the NVFP4
+     draft suffixes are our quantization of those weights.
+   - DSpine's only listed third-party component is SGLang (Apache License 2.0), modified by
+     Tencent; no SGLang code is redistributed here.
+
+4. Base model (NOT redistributed in this repo; downloaded by the user from its source)
+   - Qwen3.8-27B, https://huggingface.co/Qwen/Qwen3.8-27B  (Apache License 2.0).
+
+5. Author / fine-tuned tower (NOT redistributed here)
+   - Merkyor Qwen3.8-27B EfficientThink (Coder390) family, distributed under Apache License 2.0
+     per its model card. The Coder390 DSpine draft suffix carries TG/TSV serial tables computed
+     against that tower's head; the tower weights themselves must be obtained from the source.
+
+6. Our own artifacts (shipped here)
+   - draft/dspine-draft-{official,coder390}-{bf16tab,nvfp4tab}.ninfer  (DSpine draft suffixes)
+   - scripts/*.py, launch/*.bat, README.md                          (our tooling and launchers)
+
+No third-party trademarks are used to imply endorsement. The Qwen3.8-27B base tower and the
+Coder390 fine-tune tower must be obtained from their original sources above and remain under
+their own licenses; this repo ships only the DSpine draft and the engine that runs it.

@@ -1,0 +1,24 @@
+# User-provided target towers and fused artifacts (not redistributed)
+models/
+*.ninfer.tmp
+
+# Build output
+build/
+build-*/
+out/
+*.obj
+*.pdb
+*.ilk
+*.exp
+*.lib
+
+# Python / venv
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+
+# Logs / scratch
+*.log
+*.stackdump
+_release_validate/
